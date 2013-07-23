@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Class-Model>
+  <Classes>
+    <Class class-name="AbstractReportDefinition" display-name="AbstractReportDefinition" description="Abstract Report definition">
+      <Class-Qualifiers>
+        <Class-Qualifier name="INSTANCES_WITH_CALCULATED_ID"/>
+      </Class-Qualifiers>
+      <Class-Type>OBJECT</Class-Type>
+      <Derived-From class-name="object"/>
+      <Attributes>
+        <Attribute  name="BODY_ICON" type="string">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="HIDDEN_ATTRIBUTE"/>
+            <Attribute-Qualifier name="INTERNAL_ATTRIBUTE"/>
+            <Attribute-Qualifier name="STATIC_ATTRIBUTE"/>
+          </Attribute-Qualifiers>
+          <Default-Value>tql_report</Default-Value>
+        </Attribute>
+        <Attribute  name="FAMILY_ICON" type="string">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="HIDDEN_ATTRIBUTE"/>
+            <Attribute-Qualifier name="INTERNAL_ATTRIBUTE"/>
+            <Attribute-Qualifier name="STATIC_ATTRIBUTE"/>
+          </Attribute-Qualifiers>
+          <Default-Value>general</Default-Value>
+        </Attribute>
+        <Attribute name="report_data" type="bytes" description="Report's xml definition" size="3000000">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="STATIC"/>
+          </Attribute-Qualifiers>
+        </Attribute>
+        <Attribute name="report_description" type="string" description="report's description" size="256">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="STATIC"/>
+          </Attribute-Qualifiers>
+        </Attribute>
+        <Attribute name="report_name" type="string" description="report's name">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="ID_ATTRIBUTE"/>
+            <Attribute-Qualifier name="REQUIRED_ATTRIBUTE"/>
+            <Attribute-Qualifier name="STATIC"/>
+          </Attribute-Qualifiers>
+        </Attribute>
+        <Attribute name="report_tql" type="string" description="tql's name">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="STATIC"/>
+          </Attribute-Qualifiers>
+        </Attribute>
+        <Attribute name="report_type" type="integer" description="report type system or GM">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="REQUIRED_ATTRIBUTE"/>
+            <Attribute-Qualifier name="STATIC"/>
+          </Attribute-Qualifiers>
+        </Attribute>
+      </Attributes>
+      <Attribute-Overrides>
+        <Attribute-Override  name="display_label">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="CALCULATED_ATTRIBUTE">
+              <Data-Items>
+                <Data-Item name="FUNCTION" type="string">report_name</Data-Item>
+                <Data-Item name="PREFIX" type="string">user_label</Data-Item>
+              </Data-Items>
+            </Attribute-Qualifier>
+            <Attribute-Qualifier name="DASH_ATTRIBUTE"/>
+            <Attribute-Qualifier name="INDEX"/>
+            <Attribute-Qualifier name="READ_ONLY_ATTRIBUTE"/>
+          </Attribute-Qualifiers>
+        </Attribute-Override>
+        <Attribute-Override  name="root_iconproperties" is-partially-override="true">
+          <Attribute-Qualifiers>
+            <Attribute-Qualifier name="CALCULATED_ATTRIBUTE">
+              <Data-Items>
+                <Data-Item name="CONDITION" type="xml">
+                &lt;root_iconproperties ATTR_NAME="report_type"&gt;&lt;CONDITION VALUE="1" PICTURE="tql_report"/&gt;&lt;CONDITION VALUE="2" PICTURE="goldmaster_report"/&gt;&lt;/root_iconproperties&gt;</Data-Item>
+              </Data-Items>
+            </Attribute-Qualifier>
+          </Attribute-Qualifiers>
+        </Attribute-Override>
+      </Attribute-Overrides>
+      <Methods/>
+    </Class>
+  </Classes>
+</Class-Model>
