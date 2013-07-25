@@ -38,3 +38,12 @@ ID: `<(:id pattern)>`
 <(for [p (:parameters pattern)] ">
   * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
 <")>
+
+### Discovery Flow
+
+<(:discovery-flow pattern)>
+
+
+### Prerequisites
+
+##### Set up credentials

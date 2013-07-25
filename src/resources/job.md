@@ -15,7 +15,3 @@ ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
 <(for [p (:parameters job)] ">
   * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
 <")>
-
-### Discovery Flow
-
-<(:discovery-flow job)>

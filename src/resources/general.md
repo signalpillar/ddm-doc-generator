@@ -21,9 +21,14 @@ _Background, descriptive, or conceptual information. Learn general information a
 
 **Note**: plugin ID is used to reference it in the text below
 
-# Troubleshooting and Limitations
+# Tasks
 
-<(:limitations reference)>
-_Specialized reference topics that describe commonly encountered problems and their solutions, and list limitations of a feature or product area._
+_This section describes particular use cases that can be covered by this discovery module. Usually in this section we provide list of jobs and short description about what is discovered by each of them. Mention about shallow and deep discovery if it is relevant_
+
+## Run the discovery
 
 <(:content reference)>
+
+# Troubleshooting and Limitations
+<(:limitations reference)>
+_Specialized reference topics that describe commonly encountered problems and their solutions, and list limitations of a feature or product area._
