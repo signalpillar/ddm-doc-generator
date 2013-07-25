@@ -1,5 +1,5 @@
 # ddm-doc
-[Current version of tool, already built](/raw/ddm-doc.git/f7002bdc07d8b5f192a49a064f763d575de2bb81/ddm-doc.0.0.1.jar)
+[Check for the built version in the target folder in this repo](/raw/ddm-doc.git/target/HEAD/)
 
     ```
 
