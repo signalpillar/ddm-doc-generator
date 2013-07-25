@@ -1,6 +1,6 @@
 # ddm-doc
 
-[Current version of tool, already built](ddm-doc.0.0.1.jar)
+[Current version of tool, already built](/blob/ddm-doc.git/f7002bdc07d8b5f192a49a064f763d575de2bb81/ddm-doc.0.0.1.jar)
 
     ```
 
