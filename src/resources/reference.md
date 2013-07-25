@@ -1,3 +1,9 @@
 # References
 
-_General Reference. Detailed lists and explanations of reference-oriented material._
+<(:description reference)>
+
+<(for [pattern (:patterns reference)]
+  (str pattern))>
+
+<(for [job (:jobs reference)]
+  (str job))>

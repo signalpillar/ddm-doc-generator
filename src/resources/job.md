@@ -1,14 +1,21 @@
-## Job
+## Job "<(:display-name job)>"<a id="<(:id job)>"></a>
+
+<(:description job)>
 
 ### Adapter
 
+ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
+
 ### Trigger TQL
 
-_Picture for both CMDB versions if needed. Conditions on TQL as text not a screenshot_
+<(:trigger-tql job)>
 
 ### Parameters
 
-_Parameters on the job should be documented only if they override adapter values to provide the reason for it._
-_As template we can use such "Parameters are not overriden by default and use values from the adapter."_
+<(for [p (:parameters job)] ">
+  * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
+<")>
 
 ### Discovery Flow
+
+<(:discovery-flow job)>

@@ -26,7 +26,25 @@
 (defn parse-protocols [elm]
   (parse-nested-elements elm :protocols parse-nested-content))
 
-(defn parse-used-scripts [elm])
+(defn parse-script [elm]
+  {:index (get-in elm [:attrs :index])
+   :name (parse-nested-content elm)})
+
+(defn parse-used-scripts [elm]
+  (map parse-script (-> elm :content
+                        (tf-> :taskInfo) :content
+                        (tf-> :params) :content)))
+
+(defn parse-triggered-data [elm]
+  {:name (get-in elm [:attrs :name])
+   :description (get-in elm [:attrs :description])
+   :value (parse-nested-content elm)})
+
+(defn parse-triggered-ci-data [elm]
+  (map parse-triggered-data
+       (-> elm :content
+           (tf-> :taskInfo) :content
+           (tf-> :destinationInfo) :content)))
 
 (defn parse-descriptor [file]
   (let [root-elm (parse file)
@@ -39,6 +57,7 @@
      :parameters (parse-parameters root-elm)
      :discovered-classes (parse-discovered-classes root-elm)
      :protocols (parse-protocols root-elm)
+     :triggered-ci-data (parse-triggered-ci-data root-elm)
      :input-cit (first (parse-nested-elements root-elm :inputClass identity))}))
 
 (defn find-all-patterns [root-path]

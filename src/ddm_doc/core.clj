@@ -1,6 +1,6 @@
 (ns ddm-doc.core
   (:use [clojure.pprint :only [pprint]]
-        [clojure.java.io :only [file]])
+        [clojure.java.io :only [file writer]])
   (:require [ddm-doc.class-model :as cm]
             [ddm-doc.jobs :as ddmjobs]
             [ddm-doc.patterns :as ddmpatterns]
@@ -8,7 +8,7 @@
 
 
 (def ddm-root-path "/Users/signalpillar/proj/git-content-main/discovery/packages")
-(def class-model-path "/Users/signalpillar/proj/clj/ddm-doc/test/resources/classmodel.xml")
+(def class-model-path "/Users/signalpillar/proj/git-content-main/discovery/packages/ucmdb9-ddm-layout/src/main/resources/runtime/probeManager/discoveryConfigFiles/__CmdbClassModel.bin")
 
 (defn- group-resources [resources key-fn]
   (let [keys (map key-fn resources)]
@@ -42,13 +42,30 @@
       (serialize file-path data)
       data)))
 
-(defn build-doc [& adapter-ids]
-  (let [data (read-data :serialized? true)
+(defn prepare-adapter [adapter class-by-name]
+  (let [classes (:discovered-classes adapter)]
+    ;(assoc adapter :discovered-classes (map (comp :display-lable class-by-name) classes))
+    classes
+    ))
+
+(defn build-adapters&jobs-doc [adapter-ids]
+  (let [data (read-data :serialized? false)
         pattern-by-id (:pattern-by-id data)
         job-by-id (:job-by-id data)]
     (for [id adapter-ids]
       (let [adapter (pattern-by-id id)
-            jobs (filter #(= id (:pattern-id %)) (vals job-by-id))]
-        (md-gen/generate-doc adapter jobs)))))
+            jobs (filter #(= id (:pattern-id %)) (vals job-by-id))
+            adapter-doc (md-gen/generate-adapter adapter)
+            jobs-doc (map md-gen/generate-job jobs)]
+        [adapter-doc jobs-doc]))))
 
-(build-doc "DNS_Zone")
+(defn build-doc [& adapter-ids]
+  (let [adapter-to-jobs-pairs (build-adapters&jobs-doc adapter-ids)
+        reference-doc (md-gen/generate-reference adapter-to-jobs-pairs)
+        general-doc (md-gen/generate-general reference-doc)]
+    general-doc))
+
+(with-open [w (writer "document.md")]
+  (binding [*out* w]
+    (let [doc (build-doc "DNS_Zone")]
+      (println (.toString doc)))))

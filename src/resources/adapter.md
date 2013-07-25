@@ -2,33 +2,39 @@
 
 ID: `<(:id pattern)>`
 
+<(:description pattern)>
+
 ### Input CIT
 
 `<(:input-cit pattern)>`
 
 ### Input TQL
 
-
 ### Triggered CI Data
+
+<(for [s (:triggered-ci-data pattern)] ">
+  * <(format "`%s` - `%s` %s " (:name s) (:value s) (if-let [d (seq (:description s))] (str "- " d) ""))>
+<")>
 
 ### Used scripts
 
 <(for [s (:used-scripts pattern)] ">
-  * <(s)>
+  * <(str (:name s))>
 <")>
 
 ### Discovered CITs
-
-<(for [s (:discovered-classes pattern)] ">
-  * <(s)>
+<(for [c (:discovered-classes pattern)] ">
+  * <(str c)>
 <")>
 
 ### Global Configuration Files
 
-<(for [s (:global-configuration-files pattern)] ">
-  * <(s)>
+<(for [f (:global-configuration-files pattern)] ">
+  * <(str f)>
 <")>
 
 ### Parameters
 
-$parameters$
+<(for [p (:parameters pattern)] ">
+  * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
+<")>
