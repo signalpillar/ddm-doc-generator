@@ -1,5 +1,5 @@
 # ddm-doc
-[Check for the built version in the target folder in this repo](/raw/ddm-doc.git/target/HEAD/)
+Check for the built version in the target folder in this repo
 
     ```
 
