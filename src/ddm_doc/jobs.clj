@@ -22,9 +22,11 @@
 
 (defn parse-descriptor [file]
   (let [root-elm (parse file)
-        attrs (:attrs root-elm)]
-    {:id (:id attrs)
-     :display-name (:displayName attrs)
+        attrs (:attrs root-elm)
+        display-name (:displayName attrs)
+        id (:id attrs)]
+    {:id id
+     :display-name (if display-name display-name id)
      :description (:description attrs)
      :parameters (parse-parameters root-elm)
      :pattern-id (parse-pattern-id root-elm)
