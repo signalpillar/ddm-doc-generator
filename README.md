@@ -1,6 +1,8 @@
 # ddm-doc
 
 Tool to generate documentation for adapter and related jobs
+Currently only mardown template is used for the documentation
+
 Example,
 `java -jar ddm-doc.jar -cm <path-to-class-model> -pp <path-to-packages> <adapter-id1> <adapter-id2> > doc.md`
 
@@ -9,5 +11,3 @@ Example,
 `lein uberjar`
 
 This command will include all dependencies including `Clojure` itself
-
-
