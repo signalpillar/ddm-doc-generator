@@ -12,6 +12,8 @@ ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
 
 ### Parameters
 
-<(for [p (:parameters job)] ">
-  * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
-<")>
+Name | Type | Description
+|:-------|:-------|:-------|
+<(for [p (:parameters job)]
+(format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
+)>
