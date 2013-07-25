@@ -19,7 +19,7 @@ ID: `<(:id pattern)>`
 ### Used scripts
 
 <(for [s (:used-scripts pattern)] ">
-  * <(str (:name s))>
+  * `<(str (:name s))>`
 <")>
 
 ### Discovered CITs

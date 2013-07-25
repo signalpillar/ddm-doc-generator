@@ -7,7 +7,17 @@ on provided ids of adapters. There is no distributed binary yet but it can be bu
 
 - [ ] add support for the TQL
 - [ ] find out how to distribute the latest binary, jenkins/maven ?
-- [ ] discuss with team
+- [ ] add multimarkdown table support
+
+        #Tables
+
+        column A | column B
+        |:-------|:-------|
+        aaa | bbb
+        ccc | ddd
+        eee | fff
+
+- [ ] discuss with team how to store information that is missing right now for the complete document generation
 
 # Usage
 

@@ -1,9 +1,12 @@
 # Concepts
 
-<(:concept reference)>
-_Background, descriptive, or conceptual information. Learn general information about what a feature does._
+_Document describes the discovery of_
+
+--------------
 
 ## Introduction
+
+_Background, descriptive, or conceptual information. Learn general information about what a feature does._
 
 <(:introduction reference)>
 
