@@ -1,13 +1,13 @@
 # ddm-doc
 
-The project uses [Midje](https://github.com/marick/Midje/).
+Tool to generate documentation for adapter and related jobs
+Example,
+`java -jar ddm-doc.jar -cm <path-to-class-model> -pp <path-to-packages> <adapter-id1> <adapter-id2> > doc.md`
 
-## How to run the tests
+## How to get ddm-doc tool ready to be used
 
-`lein midje` will run all tests.
+`lein uberjar`
 
-`lein midje namespace.*` will run only tests beginning with "namespace.".
+This command will include all dependencies including `Clojure` itself
 
-`lein midje :autotest` will run all the tests indefinitely. It sets up a
-watcher on the code files. If they change, only the relevant tests will be
-run again.
+
