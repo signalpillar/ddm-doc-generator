@@ -1,5 +1,15 @@
-# ddm-doc
-> Check for the built version in the target folder in this repo
+# Current status
+
+This is a deep beta that have a lot of defects (no other way) but it is already can generate `.md` document based
+on provided ids of adapters. There is no distributed binary yet but it can be built or ask directly me to help here (skype: vvitvitskiy).
+
+# Roadmap
+
+- [ ] add support for the TQL
+- [ ] find out how to distribute the latest binary, jenkins/maven ?
+- [ ] discuss with team
+
+# Usage
 
     ```
 
@@ -14,6 +24,7 @@
      -h, --no-help, --help            false    Print this help message
      -j, --no-jobs-only, --jobs-only  false    Generate documentation for the jobs only belonging to the adapters
      -cm, --classmodel-path                    Path to the .bin file of the class model
+     -u, --update-serialized                   Update serialized version of data
      -pp, --packages-path                      Path to the root folder where package(s) are stored
 
     ```
