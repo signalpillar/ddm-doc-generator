@@ -14,8 +14,7 @@
     (zipmap keys resources)))
 
 (defn serialize [path dict]
-  (binding [*print-dup* true]
-    (spit path (str dict))))
+  (spit path (str dict)))
 
 (defn read-from-file-with-trusted-contents [filename]
   (with-open [r (java.io.PushbackReader.
@@ -27,10 +26,10 @@
 (defn read-data
   "Read information about available adapters, jobs and class-model entries
 After each call save serialized version of gathered data"
-  [ & {:keys [serialized? file-path]
-                     :or {serialized? false
+  [ & {:keys [update-serialized? file-path]
+                     :or {update-serialized? false
                           file-path "serialized.txt"}}]
-  (if (and serialized? (.exists (file file-path)))
+  (if (and (not update-serialized?) (.exists (file file-path)))
     (read-from-file-with-trusted-contents file-path)
     (let [classes (:classes (cm/parse-class-model class-model-path))
           class-by-name (group-resources classes :class-name)
@@ -70,8 +69,8 @@ take the latest script in the list
 (defn build-adapters&jobs-doc
   "Build data ready to be included in the documentation - list of pairs
 adapter to jobs declared on top of it"
-  [adapter-ids]
-  (let [data (read-data :serialized? false)
+  [adapter-ids update-serialized?]
+  (let [data (read-data :update-serialized? update-serialized?)
         class-by-name (:class-by-name data)
         pattern-by-id (:pattern-by-id data)
         job-by-id (:job-by-id data)]
@@ -88,8 +87,8 @@ adapter to jobs declared on top of it"
 - reference part
   - adapters
   - jobs"
-  [adapter-ids]
-  (let [adapter-to-jobs-pairs (build-adapters&jobs-doc adapter-ids)
+  [adapter-ids update-serialized?]
+  (let [adapter-to-jobs-pairs (build-adapters&jobs-doc adapter-ids update-serialized?)
         reference-doc (md-gen/generate-reference adapter-to-jobs-pairs)
         general-doc (md-gen/generate-general reference-doc)]
     general-doc))
