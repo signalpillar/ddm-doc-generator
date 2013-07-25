@@ -10,6 +10,7 @@ on provided ids of adapters. There is no distributed binary yet but it can be bu
 - [ ] add multimarkdown table support
 
 ```
+
         #Tables
 
         column A | column B
@@ -17,6 +18,7 @@ on provided ids of adapters. There is no distributed binary yet but it can be bu
         aaa | bbb
         ccc | ddd
         eee | fff
+
 ```
 
 - [ ] discuss with team how to store information that is missing right now for the complete document generation
