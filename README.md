@@ -1,5 +1,7 @@
 # ddm-doc
 
+[Current version of tool, already built](ddm-doc.0.0.1.jar)
+
     ```
 
     Tool to generate documentation for adapter and related jobs
