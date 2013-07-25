@@ -12,9 +12,11 @@ ID: `<(:id pattern)>`
 
 ### Triggered CI Data
 
-<(for [s (:triggered-ci-data pattern)] ">
-  * <(format "`%s` - `%s` %s " (:name s) (:value s) (if-let [d (seq (:description s))] (str "- " d) ""))>
-<")>
+Name | Value
+|:-------|:-------|
+<(for [s (:triggered-ci-data pattern)]
+(format "`%s` | `%s` %s\n" (:name s) (:value s) (if-let [d (seq (:description s))] (str "- " d) ""))
+)>
 
 ### Used scripts
 
@@ -35,9 +37,11 @@ ID: `<(:id pattern)>`
 
 ### Parameters
 
-<(for [p (:parameters pattern)] ">
-  * <(format "`%s` [`%s`] - %s" (:name p) (:type p) (:description p))>
-<")>
+Name | Type | Description
+|:-------|:-------|:-------|
+<(for [p (:parameters pattern)]
+(format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
+)>
 
 ### Discovery Flow
 
