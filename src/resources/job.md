@@ -8,12 +8,13 @@ ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
 
 ### Trigger TQL
 
-<(:trigger-tql job)>
+![](<(get-in job [:trigger-tql :file-path])>)
 
 ### Parameters
 
+<(when (seq (:parameters job)) "
 Name | Type | Description
-|:-------|:-------|:-------|
+|:-------|:-------|:-------|")>
 <(for [p (:parameters job)]
 (format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
 )>

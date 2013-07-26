@@ -46,6 +46,9 @@
            (tf-> :taskInfo) :content
            (tf-> :destinationInfo) :content)))
 
+(defn parse-input-tql [elm]
+  (-> elm :content (tf-> :inputTQL) :content first))
+
 (defn parse-descriptor [file]
   (let [root-elm (parse file)
         attrs (:attrs root-elm)]
@@ -58,6 +61,7 @@
      :discovered-classes (parse-discovered-classes root-elm)
      :protocols (parse-protocols root-elm)
      :triggered-ci-data (parse-triggered-ci-data root-elm)
+     :input-tql-root-elm (parse-input-tql root-elm)
      :input-cit (first (parse-nested-elements root-elm :inputClass identity))}))
 
 (defn find-all-patterns [root-path]

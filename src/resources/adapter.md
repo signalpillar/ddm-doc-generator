@@ -10,6 +10,8 @@ ID: `<(:id pattern)>`
 
 ### Input TQL
 
+![](<(get-in pattern [:input-tql :file-path])>)
+
 ### Triggered CI Data
 
 Name | Value
