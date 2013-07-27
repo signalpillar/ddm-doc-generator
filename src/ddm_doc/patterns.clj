@@ -26,6 +26,9 @@
 (defn parse-protocols [elm]
   (parse-nested-elements elm :protocols parse-nested-content))
 
+(defn parse-configuration-files [elm]
+  (parse-nested-elements elm :ConfigurationFiles parse-nested-content))
+
 (defn parse-script [elm]
   {:index (get-in elm [:attrs :index])
    :name (parse-nested-content elm)})
@@ -56,7 +59,7 @@
      :description (:description attrs)
      :display-name (:displayName attrs)
      :used-scripts (parse-used-scripts root-elm)
-     :global-configuration-files []
+     :global-configuration-files (parse-configuration-files root-elm)
      :parameters (parse-parameters root-elm)
      :discovered-classes (parse-discovered-classes root-elm)
      :protocols (parse-protocols root-elm)

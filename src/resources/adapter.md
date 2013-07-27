@@ -34,7 +34,7 @@ Name | Value
 ### Global Configuration Files
 
 <(for [f (:global-configuration-files pattern)] ">
-  * <(str f)>
+  * `<(str f)>`
 <")>
 
 ### Parameters
