@@ -5,9 +5,10 @@ on provided ids of adapters. There is no distributed binary yet but it can be bu
 
 # Roadmap
 
-- [ ] add support for the TQL
+- [x] add support for the TQL
+- [ ] add support for the TQL where statements on each node, print them as teble below TQL image
 - [ ] find out how to distribute the latest binary, jenkins/maven ?
-- [ ] add multimarkdown table support
+- [x] add multimarkdown table support
 
 ```
 
