@@ -74,10 +74,13 @@ take the latest script in the list
   [adapter class-by-name]
   (let [cits (:discovered-classes adapter)
         scripts (:used-scripts adapter)
-        display-names (map (comp :display-name class-by-name) cits)
+        get-cit-display-name (comp :display-name class-by-name)
+        display-names (map get-cit-display-name  cits)
+        input-cit (get-cit-display-name (:input-cit adapter))
         tql-img-path (format "%s_input_tql.png" (:id adapter))]
     (generate-class-diagram (:input-tql-root-elm adapter) tql-img-path)
     (assoc adapter
+      :input-cit input-cit
       :input-tql {:file-path tql-img-path}
       :discovered-classes display-names
       :used-scripts [(find-entry-point-module scripts)])))
