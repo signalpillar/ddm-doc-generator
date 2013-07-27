@@ -64,7 +64,8 @@ take the latest script in the list
       (let [path (file (:path tql))
             name (.getName path)]
         (generate-class-diagram path)
-        (assoc job :trigger-tql {:file-path (format "%s.png" name)})))
+        (assoc job :trigger-tql {:file-path (format "%s.png" name)
+                                 :tql-file-name name})))
     job))
 
 (defn prepare-adapter
