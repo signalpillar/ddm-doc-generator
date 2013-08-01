@@ -27,7 +27,7 @@ Name | Value
 <")>
 
 ### Discovered CITs
-<(for [c (:discovered-classes pattern)] ">
+<(for [c (sort (:discovered-classes pattern))] ">
   * <(str c)>
 <")>
 
