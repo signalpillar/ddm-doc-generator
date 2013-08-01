@@ -3,6 +3,7 @@
         [clojure.java.io :only [file writer]]
         [panda-cheese.core :only [generate-class-diagram]])
   (:require [ddm-doc.class-model :as cm]
+            [ddm-doc.cits :as ddmcits]
             [ddm-doc.jobs :as ddmjobs]
             [ddm-doc.tqls :as ddmtqls]
             [ddm-doc.patterns :as ddmpatterns]
@@ -31,8 +32,11 @@ After each call save serialized version of gathered data"
                           file-path "serialized.txt"}}]
   (if (and (not update-serialized?) (.exists (file file-path)))
     (read-from-file-with-trusted-contents file-path)
-    (let [classes (:classes (cm/parse-class-model class-model-path))
-          class-by-name (group-resources classes :class-name)
+    (let [class-by-name (merge
+                   (group-resources
+                    (cm/parse-class-model class-model-path) :class-name)
+                   (group-resources
+                    (ddmcits/find-all-cits ddm-root-path) :class-name))
           tqls (ddmtqls/find-all-tqls ddm-root-path)
           tql-by-name (group-resources tqls :name)
           jobs (ddmjobs/find-all-jobs ddm-root-path)
@@ -75,9 +79,8 @@ take the latest script in the list
   [adapter class-by-name]
   (let [cits (:discovered-classes adapter)
         scripts (:used-scripts adapter)
-        get-cit-display-name (comp :display-name class-by-name)
-        display-names (map get-cit-display-name  cits)
-        input-cit (get-cit-display-name (:input-cit adapter))
+        display-names (map (partial get-cit-display-name class-by-name) cits)
+        input-cit (get-cit-display-name class-by-name (:input-cit adapter))
         tql-img-path (format "%s_input_tql.png" (:id adapter))]
     (generate-class-diagram (:input-tql-root-elm adapter) tql-img-path)
     (assoc adapter

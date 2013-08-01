@@ -16,4 +16,4 @@
 (defn parse-class-model [source]
   (let [elms (parse source)
         class-definition-elms (get-class-els elms)]
-    {:classes (map parse-class-definition class-definition-elms)}))
+    (map parse-class-definition class-definition-elms)))
