@@ -61,16 +61,25 @@ take the latest script in the list
     (last scripts)
     (apply max-key #(Integer/parseInt (:index %)) scripts)))
 
+
+
+(defn generate-trigger-tql [tql]
+  (let [path (file (:path tql))
+        name (.getName path)]
+    (generate-class-diagram path)
+    {:file-path (format "%s.png" name)
+     :file-name name}))
+
 (defn prepare-job
   [job tql-by-name]
-  (if-let [tql (tql-by-name (:trigger job))]
-    (do
-      (let [path (file (:path tql))
-            name (.getName path)]
-        (generate-class-diagram path)
-        (assoc job :trigger-tql {:file-path (format "%s.png" name)
-                                 :tql-file-name name})))
+  (if-let [tqls (seq (map tql-by-name (:triggers job)))]
+    (assoc job :trigger-tqls (map generate-trigger-tql tqls))
     job))
+
+(defn get-cit-display-name [class-by-name name]
+  (if-let [cls (class-by-name name)]
+    (:display-name cls)
+    (throw (IllegalArgumentException. (str "Missed display name for the " name)))))
 
 (defn prepare-adapter
   "Prepare adapter for the documenting

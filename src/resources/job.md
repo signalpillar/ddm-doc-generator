@@ -7,8 +7,9 @@
 ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
 
 ### Trigger TQL
-
-![<(get-in job [:trigger-tql :tql-file-name])>](<(get-in job [:trigger-tql :file-path])>)
+<(for [tql (:trigger-tqls job)]
+(format "![%s](%s)\n\n" (:file-name tql) (:file-path tql))
+)>
 
 ### Parameters
 
