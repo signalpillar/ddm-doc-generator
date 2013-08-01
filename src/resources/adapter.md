@@ -14,10 +14,10 @@ ID: `<(:id pattern)>`
 
 ### Triggered CI Data
 
-Name | Value
-|:-------|:-------|
+Name | Value | Description
+|:-------|:-------|:-------|
 <(for [s (:triggered-ci-data pattern)]
-(format "`%s` | `%s` %s\n" (:name s) (:value s) (if-let [d (seq (:description s))] (str "- " d) ""))
+(format "`%s` | `%s` | %s\n" (:name s) (:value s) (if (seq (:description s)) (:description s) "-"))
 )>
 
 ### Used scripts
