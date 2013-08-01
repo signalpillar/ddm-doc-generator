@@ -54,3 +54,7 @@ Name | Type | Description
 ### Prerequisites
 
 ##### Set up credentials
+
+<(for [s (:protocols pattern)] ">
+  * `<(str s)>`
+<")>
