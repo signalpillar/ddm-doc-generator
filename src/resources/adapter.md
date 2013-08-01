@@ -16,7 +16,11 @@ ID: `<(:id pattern)>`
 
 Name | Value | Description
 |:-------|:-------|:-------|
-<(for [s (:triggered-ci-data pattern)]
+<(for [s (sort-by
+    #(if-let [dot-idx (.indexOf (:value %) ".")]
+        (.substring (:value %) 0 dot-idx)
+        (:value %))
+    (:triggered-ci-data pattern))]
 (format "`%s` | `%s` | %s\n" (:name s) (:value s) (if (seq (:description s)) (:description s) "-"))
 )>
 
