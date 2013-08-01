@@ -39,8 +39,9 @@ Name | Value
 
 ### Parameters
 
+<(when (seq (:parameters pattern)) "
 Name | Type | Description
-|:-------|:-------|:-------|
+|:-------|:-------|:-------|")>
 <(for [p (:parameters pattern)]
 (format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
 )>
