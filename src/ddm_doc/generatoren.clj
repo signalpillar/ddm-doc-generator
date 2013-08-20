@@ -42,4 +42,5 @@ java -jar ddm-doc.jar -cm <path-to-class-model> -pp <path-to-packages> <adapter-
     (println  (str (ddm-doc.core/build-doc
                     (:packages-path options)
                     (:classmodel-path options)
-                    adapter-ids (:update-serialized options))))))
+                    adapter-ids (:update-serialized options))))
+    (System/exit 0)))
