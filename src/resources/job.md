@@ -14,8 +14,8 @@ ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
 ### Parameters
 
 <(when (seq (:parameters job)) "
-Name | Type | Description
+| Name | Type | Description |
 |:-------|:-------|:-------|")>
 <(for [p (:parameters job)]
-(format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
+(format "| `%s` | `%s` | %s |\n" (:name p) (:type p) (:description p))
 )>

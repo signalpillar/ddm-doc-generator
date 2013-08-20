@@ -14,14 +14,14 @@ ID: `<(:id pattern)>`
 
 ### Triggered CI Data
 
-Name | Value | Description
+| Name | Value | Description |
 |:-------|:-------|:-------|
 <(for [s (sort-by
     #(if-let [dot-idx (.indexOf (:value %) ".")]
         (.substring (:value %) 0 dot-idx)
         (:value %))
     (:triggered-ci-data pattern))]
-(format "`%s` | `%s` | %s\n" (:name s) (:value s) (if (seq (:description s)) (:description s) "-"))
+(format "| `%s` | `%s` | %s |\n" (:name s) (:value s) (if (seq (:description s)) (:description s) "-"))
 )>
 
 ### Used scripts
@@ -44,10 +44,10 @@ Name | Value | Description
 ### Parameters
 
 <(when (seq (:parameters pattern)) "
-Name | Type | Description
+| Name | Type | Description |
 |:-------|:-------|:-------|")>
 <(for [p (:parameters pattern)]
-(format "`%s` | `%s` | %s\n" (:name p) (:type p) (:description p))
+(format "| `%s` | `%s` | %s | \n" (:name p) (:type p) (:description p))
 )>
 
 ### Discovery Flow
