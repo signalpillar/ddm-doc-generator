@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Class class-name="class_name" display-name="ClassDisplayName" description="-description">
+    <Class-Type>OBJECT</Class-Type>
+    <Derived-From class-name="base_class"/>
+    <Attributes>
+        <Attribute name="number" type="string" display-name="Number" description="number-description" size="2">
+            <Attribute-Qualifiers/>
+            <Empty-Default-Value/>
+        </Attribute>
+    </Attributes>
+</Class>
