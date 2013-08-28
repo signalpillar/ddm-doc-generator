@@ -1,64 +1,59 @@
-## Adapter "<(:display-name pattern)>"<a id="<(:id pattern)>"></a>
+## Adapter "{{display-name}}"<a id="{{id}}"></a>
 
-ID: `<(:id pattern)>`
+ID: `{{id}}`
 
-<(:description pattern)>
+{{description}}
 
 ### Input CIT
 
-`<(:input-cit pattern)>`
+`{{input-cit}}`
 
 ### Input TQL
 
-![](<(get-in pattern [:input-tql :file-path])>)
+![]({{input-tql.file-path}})
 
 ### Triggered CI Data
 
 | Name | Value | Description |
-|:-------|:-------|:-------|
-<(for [s (sort-by
-    #(if-let [dot-idx (.indexOf (:value %) ".")]
-        (.substring (:value %) 0 dot-idx)
-        (:value %))
-    (:triggered-ci-data pattern))]
-(format "| `%s` | `%s` | %s |\n" (:name s) (:value s) (if (seq (:description s)) (:description s) "-"))
-)>
+|:-------|:-------|:-------|{% for t in triggered-ci-data %}
+| `{{t.name}}` | `{{t.value}}` | {{t.description}} |{% endfor %}
 
 ### Used scripts
 
-<(for [s (:used-scripts pattern)] ">
-  * `<(str (:name s))>`
-<")>
+{% for s in used-scripts %}
+  * `{{s.name}}`
+{% endfor %}
+
 
 ### Discovered CITs
-<(for [c (sort (:discovered-classes pattern))] ">
-  * <(str c)>
-<")>
+{% for c in discovered-classes %}
+  * {{c}}
+{% endfor %}
+
 
 ### Global Configuration Files
 
-<(for [f (:global-configuration-files pattern)] ">
-  * `<(str f)>`
-<")>
+{% for f in global-configuration-files %}
+  * `{{f}}`
+{% endfor %}
 
 ### Parameters
 
-<(when (seq (:parameters pattern)) "
+{% if has-parameters %}
 | Name | Type | Description |
-|:-------|:-------|:-------|")>
-<(for [p (:parameters pattern)]
-(format "| `%s` | `%s` | %s | \n" (:name p) (:type p) (:description p))
-)>
+|:-------|:-------|:-------|{% for p in parameters %}
+| `{{p.name}}` | `{{p.type}}` | {{p.description}} |{% endfor %}
+{% endif %}
 
 ### Discovery Flow
 
-<(:discovery-flow pattern)>
+{{discovery-flow}}
 
 
 ### Prerequisites
 
 ##### Set up credentials
 
-<(for [s (:protocols pattern)] ">
-  * `<(str s)>`
-<")>
+{% for p in protocols %}
+  * `{{p}}`
+{% endfor %}

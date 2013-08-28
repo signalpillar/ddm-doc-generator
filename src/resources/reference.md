@@ -1,9 +1,11 @@
 # References
 
-<(:description reference)>
+{{description}}
 
-<(for [pattern (:patterns reference)]
-  (str pattern))>
+{% for p in patterns %}
+{{p}}
+{% endfor %}
 
-<(for [job (:jobs reference)]
-  (str job))>
+{% for j in jobs %}
+{{j}}
+{% endfor %}

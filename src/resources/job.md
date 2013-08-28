@@ -1,22 +1,22 @@
-## Job "<(:display-name job)>"<a id="<(:id job)>"></a>
+## Job "{{display-name}}"<a id="{{id}}"></a>
 
-<(:description job)>
+{{description}}
 
 ### Adapter
 
-ID: [`<(:pattern-id job)>`](#<(:pattern-id job)>)
+ID: [`{{pattern-id}}`](#{{pattern-id}})
 
 ### Trigger TQL
-<(for [tql (:trigger-tqls job)]
-(format "#### %s
-![](%s)\n\n" (:file-name tql) (:file-path tql))
-)>
+{% for tql in trigger-tqls %}
+#### {{tql.file-name}}
+![]({{tql.file-path}})
+{% endfor %}
+
 
 ### Parameters
 
-<(when (seq (:parameters job)) "
+{% if has-parameters %}
 | Name | Type | Description |
-|:-------|:-------|:-------|")>
-<(for [p (:parameters job)]
-(format "| `%s` | `%s` | %s |\n" (:name p) (:type p) (:description p))
-)>
+|:-------|:-------|:-------|{% for p in parameters %}
+| `{{p.name}}` | `{{p.type}}` | {{p.description}} |{% endfor %}
+{% endif %}

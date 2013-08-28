@@ -8,15 +8,15 @@ _Document describes the discovery of_
 
 _Background, descriptive, or conceptual information. Learn general information about what a feature does._
 
-<(:introduction reference)>
+{{introduction}}
 
 ## Support matrix
 
-<(:support-matrix reference)>
+{{support-matrix}}
 
 ## Topology Map
 
-<(:topology-map reference)>
+{{topology-map}}
 
 ## Discovery mechanism
 
@@ -30,8 +30,8 @@ _This section describes particular use cases that can be covered by this discove
 
 ## Run the discovery
 
-<(:content reference)>
+{{content}}
 
 # Troubleshooting and Limitations
-<(:limitations reference)>
+{{limitations}}
 _Specialized reference topics that describe commonly encountered problems and their solutions, and list limitations of a feature or product area._
