@@ -1,0 +1,16 @@
+<Applications>
+    <Default-Application-Type>default_rs</Default-Application-Type>
+
+    <Application-Component name="-name" app_id="-app-id" ci_type="-ci-type" category="-category" supported_versions="xx" vendor="-vendor">
+        <process name="process.exe" main-process="true" ports="None" description="Service runner" required="true" />
+        <process name="process2.exe" ports="all" required="true" description="Starts the data movement engine that integrates data from multiple heterogeneous source"/>
+        <attribute name="category" value="Data Services" type="string" />
+    </Application-Component>
+
+    <Application-Component name="-name" app_id="-app-id" category="-category" supported_versions="xx" vendor="-vendor">
+        <process name="process.exe" main-process="true" ports="None" description="Service runner" required="true" />
+        <process name="process2.exe" ports="all" required="true" description="Starts the data movement engine that integrates data from multiple heterogeneous source"/>
+        <attribute name="category" value="Data Services" type="string" />
+    </Application-Component>
+
+</Applications>

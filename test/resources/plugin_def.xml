@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<package>
+     <plugins>
+        <plugin id="plugin_id1">
+            <name>-name</name>
+            <description>-descr</description>
+            <module>plugin_module</module>
+            <class>PluginClass</class>
+            <qualifiers>
+                <qualifier type="application">app-id</qualifier>
+                <qualifier type="protocol">proto-1</qualifier>
+                <qualifier type="protocol">proto-2</qualifier>
+            </qualifiers>
+            <dependencies>
+                <module>x</module>
+                <module>y</module>
+            </dependencies>
+        </plugin>
+        <plugin id="plugin_id1">
+            <name>-name</name>
+            <description>-descr</description>
+            <module>plugin_module</module>
+            <class>PluginClass</class>
+            <qualifiers>
+                <qualifier type="application">app-id</qualifier>
+                <qualifier type="protocol">proto-1</qualifier>
+                <qualifier type="protocol">proto-2</qualifier>
+            </qualifiers>
+            <dependencies>
+                <module>x</module>
+                <module>y</module>
+            </dependencies>
+        </plugin>
+     </plugins>
+</package>
