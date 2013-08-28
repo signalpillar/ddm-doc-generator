@@ -56,6 +56,7 @@
   (let [root-elm (parse file)
         attrs (:attrs root-elm)]
     {:id (:id attrs)
+     :path (.getPath file)
      :description (:description attrs)
      :display-name (:displayName attrs)
      :used-scripts (parse-used-scripts root-elm)

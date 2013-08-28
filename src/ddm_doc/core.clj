@@ -41,12 +41,11 @@ After each call save serialized version of gathered data"
           tql-by-name (group-resources tqls :name)
           jobs (ddmjobs/find-all-jobs ddm-root-path)
           job-by-id (group-resources jobs :id)
-          patterns (ddmpatterns/find-all-patterns ddm-root-path)
-          pattern-by-id (group-resources patterns :id)
+          adapters (ddmpatterns/find-all-patterns ddm-root-path)
           data {:class-by-name class-by-name
                 :tql-by-name tql-by-name
                 :job-by-id job-by-id
-                :pattern-by-id pattern-by-id}]
+                :adapters adapters}]
       (serialize file-path data)
       data)))
 
@@ -98,17 +97,22 @@ take the latest script in the list
       :discovered-classes display-names
       :used-scripts [(find-entry-point-module scripts)])))
 
+(defn is-in-package [package-name adapter]
+  (.contains (:path adapter) package-name))
+
 (defn build-adapters&jobs-doc
   "Build data ready to be included in the documentation - list of pairs
 adapter to jobs declared on top of it"
-  [ddm-path cm-path adapter-ids update-serialized?]
+  [ddm-path cm-path package-name update-serialized?]
+
   (let [data (read-data ddm-path cm-path :update-serialized? update-serialized?)
         class-by-name (:class-by-name data)
-        pattern-by-id (:pattern-by-id data)
+        adapters (:adapters data)
         tql-by-name (:tql-by-name data)
         job-by-id (:job-by-id data)]
-    (for [id adapter-ids]
-      (let [adapter (prepare-adapter (pattern-by-id id) class-by-name)
+    (for [adapter (filter (partial is-in-package package-name) adapters)]
+      (let [adapter (prepare-adapter adapter class-by-name)
+            id (:id adapter)
             jobs (filter #(= id (:pattern-id %)) (vals job-by-id))
             adapter-doc (md-gen/generate-adapter adapter)
             jobs-doc (map (comp md-gen/generate-job
@@ -120,11 +124,12 @@ adapter to jobs declared on top of it"
 - concepts and introductional section
 - reference part
   - adapters
-  - jobs"
-  [ddm-path cm-path adapter-ids update-serialized?]
+  - jobs
+  - application signature and plugins"
+  [ddm-path cm-path package-name update-serialized?]
   (let [adapter-to-jobs-pairs (build-adapters&jobs-doc
                                ddm-path cm-path
-                               adapter-ids update-serialized?)
+                               package-name update-serialized?)
         reference-doc (md-gen/generate-reference adapter-to-jobs-pairs)
         general-doc (md-gen/generate-general reference-doc)]
     general-doc))
