@@ -19,10 +19,14 @@
   (render-file "resources/job.md"
                (assoc job :has-parameters (> (count (:parameters job)) 0))))
 
-(defn generate-reference [pattern-to-jobs-pairs]
+(defn generate-reference [pattern-to-jobs-pairs cmp-to-plugins]
   (render-file "resources/reference.md"
                {:patterns (map first pattern-to-jobs-pairs)
                 :jobs (mapcat second pattern-to-jobs-pairs)}))
 
 (defn generate-general [reference]
   (render-file "resources/general.md" {:content (str reference)}))
+
+(defn generate-signs [plugins-by-sign]
+  "Generate reference information about application components and plugins"
+  (render-file "resources/appsign.md" {:plugins-by-sign plugins-by-sign}))
