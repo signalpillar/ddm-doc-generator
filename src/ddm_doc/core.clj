@@ -6,6 +6,7 @@
             [ddm-doc.cits :as ddmcits]
             [ddm-doc.jobs :as ddmjobs]
             [ddm-doc.tqls :as ddmtqls]
+            [ddm-doc.appsigs :as ddmsign]
             [ddm-doc.patterns :as ddmpatterns]
             [ddm-doc.md-generator :as md-gen]))
 
@@ -42,7 +43,11 @@ After each call save serialized version of gathered data"
           jobs (ddmjobs/find-all-jobs ddm-root-path)
           job-by-id (group-resources jobs :id)
           adapters (ddmpatterns/find-all-patterns ddm-root-path)
+          plugins (ddmsign/find-all-plugins ddm-root-path)
+          signature_defs (ddmsign/find-all-signs ddm-root-path)
           data {:class-by-name class-by-name
+                :signature_defs signature_defs
+                :plugins plugins
                 :tql-by-name tql-by-name
                 :job-by-id job-by-id
                 :adapters adapters}]
@@ -98,19 +103,19 @@ take the latest script in the list
       :used-scripts [(find-entry-point-module scripts)])))
 
 (defn is-in-package [package-name adapter]
-  (.contains (:path adapter) package-name))
+  (when (.contains (:path adapter) package-name)
+    adapter))
 
 (defn build-adapters&jobs-doc
   "Build data ready to be included in the documentation - list of pairs
 adapter to jobs declared on top of it"
-  [ddm-path cm-path package-name update-serialized?]
+  [data package-name]
 
-  (let [data (read-data ddm-path cm-path :update-serialized? update-serialized?)
-        class-by-name (:class-by-name data)
+  (let [class-by-name (:class-by-name data)
         adapters (:adapters data)
         tql-by-name (:tql-by-name data)
         job-by-id (:job-by-id data)]
-    (for [adapter (filter (partial is-in-package package-name) adapters)]
+    (for [adapter (some (partial is-in-package package-name) adapters)]
       (let [adapter (prepare-adapter adapter class-by-name)
             id (:id adapter)
             jobs (filter #(= id (:pattern-id %)) (vals job-by-id))
@@ -118,6 +123,29 @@ adapter to jobs declared on top of it"
             jobs-doc (map (comp md-gen/generate-job
                                 #(prepare-job % tql-by-name)) jobs)]
         [adapter-doc jobs-doc]))))
+
+
+(defn set-active-qualifier [plugin]
+  (for [[_ app] (filter #(= "application" (first %)) (:qualifiers plugin))]
+    (assoc plugin :active-qualifier app)))
+
+(defn group-by-app-qualifier [plugins]
+  (group-by :active-qualifier (mapcat set-active-qualifier plugins)))
+
+(defn make-cmp-to-plugins-pair [plugins-by-app cmp]
+  (let [app (or (:app_id cmp) (:name cmp))]
+    [cmp (plugins-by-app app)]))
+
+(defn build-signature&plugins
+  [data package-name]
+  (let [signatures     (:signature_defs data)
+        plugins        (:plugins data)
+        signature      (some (partial is-in-package package-name) signatures)
+        cmps           (:cmps signature)
+
+        plugins-by-app (group-by-app-qualifier plugins)
+        cmp-to-plugins (map (partial make-cmp-to-plugins-pair plugins-by-app) cmps)]
+    cmp-to-plugins))
 
 (defn build-doc
   "Build general documentation that includes
@@ -127,9 +155,12 @@ adapter to jobs declared on top of it"
   - jobs
   - application signature and plugins"
   [ddm-path cm-path package-name update-serialized?]
-  (let [adapter-to-jobs-pairs (build-adapters&jobs-doc
-                               ddm-path cm-path
-                               package-name update-serialized?)
-        reference-doc (md-gen/generate-reference adapter-to-jobs-pairs)
+  (let [data (read-data cm-path ddm-path :update-serialized? update-serialized?)
+        adapter-to-jobs-pairs (build-adapters&jobs-doc data package-name)
+        cmp-to-plugins (build-signature&plugins data package-name)
+        _ (println (count cmp-to-plugins))
+        reference-doc (md-gen/generate-reference
+                        adapter-to-jobs-pairs
+                        cmp-to-plugins)
         general-doc (md-gen/generate-general reference-doc)]
     general-doc))
