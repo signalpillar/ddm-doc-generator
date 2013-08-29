@@ -1,5 +1,6 @@
 (ns ddm-doc.appsigs
   (:require [clojure.java.io :as io]
+            [clojure.xml :as cxml]
             [ddm-doc.xml :as xml]))
 
 (defn- find-default-app-type [elm]
@@ -24,10 +25,12 @@
 
 (defn parse-sign-descriptor
   "Return sequence of components"
-  [elm]
-  (let [default-app-type (find-default-app-type elm)
+  [file]
+  (let [elm (cxml/parse file)
+        default-app-type (find-default-app-type elm)
         cmp-tags (filter-content-tags :Application-Component elm)]
-    (map (partial parse-app-component default-app-type) cmp-tags)))
+    {:cmps (map (partial parse-app-component default-app-type) cmp-tags)
+     :path (.getPath file)}))
 
 (defn- parse-plugin-qualifiers [elm]
   (let [qtag (xml/tf-> (:content elm) :qualifiers)]
@@ -56,11 +59,13 @@
 
 (defn parse-plugin-descriptor
   "Return sequence of plugins"
-  [elm]
-  (let [plugins-elm (xml/tf-> (:content elm) :plugins)
+  [file]
+  (let [elm (cxml/parse file)
+        plugins-elm (xml/tf-> (:content elm) :plugins)
         plugin-tags (filter-content-tags :plugin plugins-elm)
         plugins (mapv parse-plugin-def plugin-tags)]
-    plugins))
+    {:plugins plugins
+     :path (.getPath file)}))
 
 (defn sign-descriptor-file? [file]
   (= "applicationsSignature.xml" (.getName file)))
