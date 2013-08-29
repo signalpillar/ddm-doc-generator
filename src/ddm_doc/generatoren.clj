@@ -8,7 +8,7 @@
 (def USAGE "Tool to generate documentation for module and its resources
 
 Usage:
-   generatoren <path-to-class-model> <path-to-packages> <package-name>
+   generatoren [--update-serialized] <path-to-class-model> <path-to-packages> <package-name>
    generatoren -h | --help
 
 
